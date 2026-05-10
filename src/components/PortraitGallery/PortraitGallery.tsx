@@ -965,165 +965,99 @@ export const PortraitGallery = () => {
       </div>
       <div className="muteControl" onClick={toggleMute}>{isMuted ? 'UNMUTE' : 'MUTE'}</div>
 
+      {/* Soul Reveal Detail View */}
       <AnimatePresence>
-        {isSoulRevealing && (
+        {isSoulRevealing && revealedSign && (
           <motion.div 
             className="soulOverlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeSoulReveal}
-            onMouseMove={(e) => {
-              const x = (e.clientX / window.innerWidth - 0.5) * 30;
-              const y = (e.clientY / window.innerHeight - 0.5) * 30;
-              setTilt({ x: y, y: -x });
-            }}
           >
-            <div className="nebula" style={{ '--color': revealedSign?.color } as any} />
-            <div className="sacredGeometry" />
+            <div className="nebula" style={{ '--color': revealedSign.color } as any} />
             
-            {/* Holographic Side Streams */}
-            <div className="dataStream left">
-              {[...Array(10)].map((_, i) => (
-                <div key={i} className="bit">{Math.random().toString(16).slice(2, 10).toUpperCase()}</div>
-              ))}
-            </div>
-            <div className="dataStream right">
-              {[...Array(10)].map((_, i) => (
-                <div key={i} className="bit">{Math.random().toString(16).slice(2, 10).toUpperCase()}</div>
-              ))}
-            </div>
-
             <motion.div 
               className="soulContent"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              style={{ transform: `perspective(1000px) rotateX(${tilt.x * 0.5}deg) rotateY(${tilt.y * 0.5}deg)` }}
             >
-              <motion.div 
-                className="header"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <div className="resonanceTag">RESONANCE_STABILIZED // {revealedSign?.confidence}</div>
-                <h2 className="label">{revealedSign?.label}</h2>
-              </motion.div>
-
-              <div className="messageWrapper">
-                <motion.h1 className="message">
-                  {revealedSign?.soulMessage.split('').map((char: string, i: number) => (
-                    <motion.span
-                      key={i}
-                      initial={{ opacity: 0, filter: 'blur(10px)' }}
-                      animate={{ opacity: 1, filter: 'blur(0px)' }}
-                      transition={{ delay: 0.8 + i * 0.03, duration: 0.5 }}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.h1>
+              <div className="leftPanel">
+                <h1 className="signLabel">{revealedSign.label}</h1>
+                <p className="soulMessage">{revealedSign.soulMessage}</p>
+                <div className="videoContainer">
+                  <video key={revealedSign.videoUrl} src={revealedSign.videoUrl} autoPlay loop muted playsInline />
+                </div>
               </div>
 
-              {/* Technical Specifications Panel */}
-              <motion.div 
-                className="technicalSpecs"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.0 }}
-              >
-                <div className="specHeader">LINGUISTIC_DEEP_DATA // v4.0</div>
-                <div className="specGrid">
-                  <div className="specItem">
-                    <span className="specLabel">EXECUTION_STEPS</span>
-                    <p className="specValue">{revealedSign?.howTo}</p>
-                  </div>
-                  <div className="specItem">
-                    <span className="specLabel">SEMANTIC_ORIGIN</span>
-                    <p className="specValue">{revealedSign?.deepMeaning}</p>
-                  </div>
-                  <div className="specItem">
-                    <span className="specLabel">USAGE_CONTEXT</span>
-                    <p className="specValue">{revealedSign?.usageExample}</p>
-                  </div>
+              <div className="rightPanel">
+                <div className="infoSection">
+                  <span className="specLabel">SPIRITUAL_MEANING</span>
+                  <p className="specValue">{revealedSign.deepMeaning}</p>
                 </div>
-              </motion.div>
+                <div className="infoSection">
+                  <span className="specLabel">PHYSICAL_GUIDE</span>
+                  <p className="specValue">{revealedSign.howTo}</p>
+                </div>
+                <div className="infoSection">
+                  <span className="specLabel">CONTEXTUAL_USAGE</span>
+                  <p className="specValue">{revealedSign.usageExample}</p>
+                </div>
 
-              <motion.div 
-                className="resonanceWave"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-              >
-                <div className="circle" />
-                <div className="circle" />
-                <div className="circle" />
-              </motion.div>
-
-              <motion.div 
-                className="footer"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
                 <div className="soulActions">
-                  <button 
-                    className="practiceBtn" 
-                    onClick={(e) => { 
-                      console.log("MANUAL_CLICK: Practice Triggered");
-                      e.stopPropagation(); 
-                      startPractice(); 
-                    }}
-                  >
-                    {isPracticeMode ? '[PRACTICE_ACTIVE]' : '[START_AI_PRACTICE]'}
-                  </button>
-                  <button className="closeSoulBtn" onClick={(e) => { e.stopPropagation(); closeSoulReveal(); }}>[CLOSE_INTERFACE]</button>
+                  <button className="practiceBtn" onClick={() => setIsPracticeMode(true)}>START_AI_PRACTICE</button>
+                  <button className="closeSoulBtn" onClick={closeSoulReveal}>CLOSE_INTERFACE</button>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
-
-            {/* Practice Overlay */}
-            <AnimatePresence>
-              {isPracticeMode && (
-                <motion.div 
-                  className="practiceOverlay"
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="practiceHeader">
-                    <div className="title">MIRROR_VISION_ACTIVE // v4.0</div>
-                    <div className="accuracy">MATCH_ACCURACY: {practiceAccuracy}%</div>
-                  </div>
-                  <div className="videoContainer">
-                    <video ref={videoRefMedia} className="hiddenVideo" style={{ display: 'none' }} />
-                    <canvas ref={canvasRefMedia} width="640" height="480" className="skeletonCanvas" />
-                    <div className="guideOutline" />
-                  </div>
-                  <div className="practiceControls">
-                    <button className="stopBtn" onClick={stopPractice}>EXIT_PRACTICE</button>
-                  </div>
-                  
-                  {practiceAccuracy < 50 && practiceAccuracy > 1 && (
-                    <div className="errorMsg">!! GESTURE_NOT_RECOGNIZED // INCORRECT_SIGN !!</div>
-                  )}
-
-                  {practiceAccuracy >= 100 && (
-                    <motion.div className="successMsg" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-                      SIGN_VALIDATED // RESONANCE_MATCHED
-                    </motion.div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Corner Decorative Elements */}
-            <div className="deco tl">LOG_ID: {Math.floor(Math.random() * 900000)}</div>
-            <div className="deco br">ENCRYPTION: QUANTUM_SOUL</div>
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="technicalOverlay"><div className="corner-tl" /><div className="corner-tr" /><div className="corner-bl" /><div className="corner-br" /><div className="scanline" /></div>
+
+      {/* Practice Mode Overlay */}
+      <AnimatePresence>
+        {isPracticeMode && (
+          <motion.div 
+            className="practiceOverlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="practiceHeader">
+              <div className="title">MIRROR_VISION_ACTIVE // {revealedSign?.label}</div>
+              <div className="accuracy">RESONANCE: {Math.floor(practiceAccuracy)}%</div>
+            </div>
+
+            <div className="videoContainer">
+              <video ref={videoRefMedia} className="hiddenVideo" style={{ display: 'none' }} />
+              <canvas ref={canvasRefMedia} width="640" height="480" className="skeletonCanvas" />
+              <div className="guideOutline" />
+            </div>
+
+            <div className="practiceControls">
+              <button className="stopBtn" onClick={stopPractice}>EXIT_PRACTICE</button>
+            </div>
+
+            {practiceAccuracy < 50 && practiceAccuracy > 5 && (
+              <div className="errorMsg">!! GESTURE_NOT_RECOGNIZED !!</div>
+            )}
+
+            {practiceAccuracy >= 95 && (
+              <motion.div className="successMsg" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                SIGN_VALIDATED // RESONANCE_MATCHED
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="technicalOverlay">
+        <div className="corner-tl" /><div className="corner-tr" />
+        <div className="corner-bl" /><div className="corner-br" />
+        <div className="scanline" />
+      </div>
     </div>
   );
 };
