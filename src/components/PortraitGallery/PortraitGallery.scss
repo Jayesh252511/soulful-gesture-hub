@@ -122,23 +122,6 @@
         @media (max-width: 768px) { padding: 12px 30px; font-size: 0.6rem; }
         &:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.2); }
       }
-
-        &:hover {
-          border-color: #fff;
-          background: rgba(255, 255, 255, 0.05);
-          letter-spacing: 0.5rem;
-          box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-        }
-
-        &::after {
-          content: '';
-          position: absolute;
-          top: -50%; left: -50%; width: 200%; height: 200%;
-          background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-          transform: rotate(45deg);
-          animation: shine 3s infinite;
-        }
-      }
     }
   }
 
@@ -577,8 +560,9 @@
         &:hover { border-color: #ff0055; color: #ff0055; }
       }
     }
+  }
 
-    .errorMsg {
+  .errorMsg {
       position: absolute;
       bottom: 120px;
       color: #ff0055;
@@ -604,7 +588,6 @@
       border-radius: 10px;
       box-shadow: 0 0 50px rgba(0, 255, 157, 0.4);
     }
-  }
 
   .technicalOverlay {
     position: absolute;
@@ -620,14 +603,12 @@
   }
 }
 
+/* Animations */
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 @keyframes pulse { from { height: 10%; opacity: 0.3; } to { height: 100%; opacity: 1; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 @keyframes shine { from { transform: translateX(-100%) rotate(45deg); } to { transform: translateX(100%) rotate(45deg); } }
 @keyframes drift { from { transform: scale(1) rotate(0deg); } to { transform: scale(1.2) rotate(10deg); } }
 @keyframes wave { from { transform: scale(0.5); opacity: 0.8; } to { transform: scale(2.5); opacity: 0; } }
-@keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
