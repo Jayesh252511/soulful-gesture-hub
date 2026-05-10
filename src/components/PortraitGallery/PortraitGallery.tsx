@@ -84,15 +84,15 @@ export const PortraitGallery = () => {
       gl: WebGLRenderingContext;
       images: (HTMLImageElement | null)[] = new Array(SIGN_DATA.length).fill(null);
       textures: (WebGLTexture | null)[] = new Array(SIGN_DATA.length).fill(null);
-      imageWidth = 180;
-      imageHeight = 180;
-      gap = 25;
+      imageWidth = window.innerWidth < 768 ? 120 : 180;
+      imageHeight = window.innerWidth < 768 ? 120 : 180;
+      gap = window.innerWidth < 768 ? 15 : 25;
       viewOffset = { x: 0, y: 0 };
       drag = { isDragging: false, lastX: 0, lastY: 0, velocityX: 0, velocityY: 0 };
       inertia = 0.95;
-      bulgeStrength = 0.5;
-      bulgeRadius = 1.6;
-      adjustedBulgeRadius = 1.6;
+      bulgeStrength = window.innerWidth < 768 ? 0.3 : 0.5;
+      bulgeRadius = window.innerWidth < 768 ? 1.0 : 1.6;
+      adjustedBulgeRadius = window.innerWidth < 768 ? 1.0 : 1.6;
       program: WebGLProgram | null = null;
       particleProgram: WebGLProgram | null = null;
       positionBuffer: WebGLBuffer | null = null;
@@ -547,6 +547,16 @@ export const PortraitGallery = () => {
           this.drag.velocityY *= this.inertia;
         }
         this.render(avgFreq);
+        
+        // Final Polish: Pulse the nebula background if in overlay
+        if (isSoulRevealing) {
+          const nebula = document.querySelector('.nebula') as HTMLElement;
+          if (nebula) {
+            nebula.style.opacity = (0.15 + avgFreq * 0.3).toString();
+            nebula.style.transform = `scale(${1 + avgFreq * 0.1}) rotate(${this.time * 2}deg)`;
+          }
+        }
+
         this.animationFrameId = requestAnimationFrame(() => this.animate());
       }
 
