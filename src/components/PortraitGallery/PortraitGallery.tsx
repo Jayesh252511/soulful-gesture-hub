@@ -925,7 +925,7 @@ export const PortraitGallery = () => {
               
               <div className="guideGrid">
                 <div className="guideItem"><span>HOVER</span><p>Deep-scan any sign to see its linguistic data and video.</p></div>
-                <div className="guideItem"><span>DBL_CLICK</span><p>Unlock the 'Soul Reveal' to see deep meanings and how-to steps.</p></div>
+                <div className="guideItem"><span>{window.innerWidth > 768 ? 'DBL_CLICK' : 'TAP'}</span><p>Unlock the 'Soul Reveal' to see deep meanings and how-to steps.</p></div>
                 <div className="guideItem"><span>DRAG</span><p>Explore the infinite grid of 21 core signs.</p></div>
               </div>
 
@@ -958,10 +958,10 @@ export const PortraitGallery = () => {
             key={hoveredSign?.label}
           >
             <div className="pulse" />
-            <span>DOUBLE_CLICK_FOR_SOUL_REVEAL</span>
+            <span>{window.innerWidth > 768 ? 'DOUBLE_CLICK_FOR_SOUL_REVEAL' : 'TAP_FOR_SOUL_REVEAL'}</span>
           </motion.div>
         </div>
-        <div className="ticker"><div className="tickerContent">SYSTEM_STATUS: OK // DOUBLE CLICK ANY SIGN TO UNLOCK SOUL DATA // DICTIONARY: 21_SIGNS // BGM: ACTIVE // </div></div>
+        <div className="ticker"><div className="tickerContent">SYSTEM_STATUS: OK // {window.innerWidth > 768 ? 'DOUBLE CLICK' : 'TAP'} ANY SIGN TO UNLOCK SOUL DATA // DICTIONARY: 21_SIGNS // BGM: ACTIVE // </div></div>
       </div>
       <div className="muteControl" onClick={toggleMute}>{isMuted ? 'UNMUTE' : 'MUTE'}</div>
 

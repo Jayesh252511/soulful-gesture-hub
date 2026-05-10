@@ -164,13 +164,14 @@
     }
 
     @media (max-width: 768px) {
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      width: calc(100% - 40px);
-      border-radius: 24px;
+      bottom: 15px;
+      left: 15px;
+      right: 15px;
+      width: calc(100% - 30px);
+      border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       transform: translateY(120%);
+      max-width: 280px; // MUCH SMALLER ON MOBILE
       
       &.visible {
         transform: translateY(0);
@@ -355,12 +356,13 @@
       bottom: auto;
       transform: none;
       flex-direction: row;
-      width: calc(100% - 20px);
+      width: auto;
+      max-width: 200px; // Compact width
       overflow-x: auto;
       overflow-y: hidden;
       white-space: nowrap;
-      border-radius: 20px;
-      padding: 10px 15px;
+      border-radius: 12px;
+      padding: 6px 12px;
       &::-webkit-scrollbar { display: none; }
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -421,8 +423,8 @@
       @media (max-width: 900px) {
         flex-direction: column;
         width: 95%;
-        margin: 20px 0;
-        height: auto;
+        margin: 10px auto;
+        height: 90vh;
       }
 
       .leftPanel {
@@ -430,7 +432,7 @@
         padding: 40px;
         border-right: 1px solid rgba(255, 255, 255, 0.1);
         @media (max-width: 900px) {
-          padding: 20px;
+          padding: 15px;
           border-right: none;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -439,14 +441,14 @@
           font-size: 4rem;
           font-weight: 900;
           margin-bottom: 10px;
-          @media (max-width: 768px) { font-size: 2.5rem; }
+          @media (max-width: 768px) { font-size: 1.8rem; margin-bottom: 5px; }
         }
 
         .soulMessage {
           font-size: 1.2rem;
           opacity: 0.8;
           margin-bottom: 30px;
-          @media (max-width: 768px) { font-size: 1rem; margin-bottom: 20px; }
+          @media (max-width: 768px) { font-size: 0.8rem; margin-bottom: 10px; }
         }
 
         .videoContainer {
